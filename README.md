@@ -1,2 +1,2 @@
 # cherry
-Cherry is an efficient RDS database.
+Cherry is an efficient RDF database.
