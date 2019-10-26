@@ -44,6 +44,18 @@ public class HyperGraph {
         }
     }
 
+    public Map<String, HyperEdge> getSubjectEdges() {
+        return subjectEdges;
+    }
+
+    public Map<String, HyperEdge> getPredicateEdges() {
+        return predicateEdges;
+    }
+
+    public Map<String, HyperEdge> getObjectEdge() {
+        return objectEdge;
+    }
+
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

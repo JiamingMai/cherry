@@ -1,5 +1,7 @@
 package com.kapok.store;
 
+import java.util.Objects;
+
 public class RDF {
 
     private String id;
@@ -50,5 +52,21 @@ public class RDF {
 
     public void setObject(String object) {
         this.object = object;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RDF rdf = (RDF) o;
+        return Objects.equals(id, rdf.id) &&
+                Objects.equals(subject, rdf.subject) &&
+                Objects.equals(predicate, rdf.predicate) &&
+                Objects.equals(object, rdf.object);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, subject, predicate, object);
     }
 }
