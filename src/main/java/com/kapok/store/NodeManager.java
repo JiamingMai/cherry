@@ -43,13 +43,19 @@ public class NodeManager {
         rdfTable.put(rdf.getId(), nodeIds);
 
         // TODO: we should create a Node class to do this work later
-        //String resourcesPath = ClassLoader.getSystemResource("output").getPath();
-        String outputFileName = nodeId + ".rdf";
-        try (PrintWriter out = new PrintWriter(new FileOutputStream(new File(outputFileName), true))) {
-            out.println(rdf.getId() + ":" + rdf.getSubject() + " " + rdf.getPredicate() + " " + rdf.getObject());
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!nodeTable.get(nodeId).contains(rdf)) {
+            //String resourcesPath = ClassLoader.getSystemResource("output").getPath();
+            String outputFileName = nodeId + ".rdf";
+            try (PrintWriter out = new PrintWriter(new FileOutputStream(new File(outputFileName), true))) {
+                out.println(rdf.getId() + ":" + rdf.getSubject() + " " + rdf.getPredicate() + " " + rdf.getObject());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private synchronized boolean contains(int nodeId, RDF rdf) {
+        return nodeTable.get(nodeId).contains(rdf);
     }
 
     public synchronized Optional<Integer> getNodeIdByRDF(RDF rdf) {

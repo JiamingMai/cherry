@@ -1,3 +1,3 @@
-T8:publication2 hasAuthor person2
-T3:person2 isNamed James
 T4:person2 livesIn Washington
+T2:person1 livesIn Washington
+T5:Tom isFriendof James
