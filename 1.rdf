@@ -1,0 +1,7 @@
+T6:publication1 hasAuthor person1
+T7:publication1 hasAuthor person2
+T1:person1 isNamed Tom
+T6:publication1 hasAuthor person1
+T7:publication1 hasAuthor person2
+T8:publication2 hasAuthor person2
+T9:publication1 hasCitation publication2
