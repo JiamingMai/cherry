@@ -55,7 +55,7 @@ public class StorageManager {
             RDF rdf = new RDF(id, subject, predicate, object);
             hyperGraph.addVertex(new HyperVertex(rdf));
         }
-        System.out.println(hyperGraph);
+        //System.out.println(hyperGraph);
         return hyperGraph;
     }
 

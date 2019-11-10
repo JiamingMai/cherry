@@ -15,6 +15,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class QueryEngine {
         QueryCondition queryCondition = queryConditionVisitor.visit(query);
 
         Set<Node> nodes = nodeManager.getNodeTable().keySet();
-        List<RDF> rdfs = new ArrayList<>();
+        Set<RDF> rdfs = new HashSet<>();
         for (Node node : nodes) {
             String rdfFileName = node.getNodeId() + ".rdf";
             HyperGraph hyperGraph = node.getStorageManager().readRdfInfo(rdfFileName);
@@ -49,7 +50,7 @@ public class QueryEngine {
         return convert(rdfs, queryCondition);
     }
 
-    private QueryResult convert(List<RDF> rdfs, QueryCondition queryCondition) {
+    private QueryResult convert(Set<RDF> rdfs, QueryCondition queryCondition) {
         List<QueryResult.Record> records = new ArrayList<>();
         for (RDF rdf : rdfs) {
             QueryResult.Record record = new QueryResult.Record();
