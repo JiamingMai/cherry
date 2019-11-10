@@ -1,14 +1,20 @@
 package com.kapok.store;
 
+import com.kapok.service.NodeManager;
+
 import java.util.*;
 
 public class Splitter {
 
-    private NodeManager nodeManager = new NodeManager();
+    private NodeManager nodeManager;
 
     private final int DEFAULT_BLOCK_SIZE = 64;
 
     private final int DEFAULT_CHUNK_SIZE_PER_NODE = 10;
+
+    public Splitter(NodeManager nodeManager) {
+        this.nodeManager = nodeManager;
+    }
 
     public void split(HyperGraph hyperGraph, String predicate) {
         // Step 1. Select subject subset

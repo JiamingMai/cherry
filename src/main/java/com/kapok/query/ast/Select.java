@@ -1,8 +1,10 @@
 package com.kapok.query.ast;
 
+import com.kapok.query.parser.AstVisitor;
+
 import java.util.List;
 
-public class Select {
+public class Select implements Element {
 
     private List<Field> selectItems;
 
@@ -12,6 +14,11 @@ public class Select {
 
     public void setSelectItems(List<Field> selectItems) {
         this.selectItems = selectItems;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

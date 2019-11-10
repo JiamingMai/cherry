@@ -1,6 +1,8 @@
 package com.kapok.query.ast;
 
-public class Query implements Node {
+import com.kapok.query.parser.AstVisitor;
+
+public class Query implements Element {
 
     private Select select;
 
@@ -30,6 +32,11 @@ public class Query implements Node {
 
     public void setWhere(Where where) {
         this.where = where;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

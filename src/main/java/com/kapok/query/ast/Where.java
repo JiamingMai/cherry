@@ -1,6 +1,8 @@
 package com.kapok.query.ast;
 
-public class Where implements Node {
+import com.kapok.query.parser.AstVisitor;
+
+public class Where implements Element {
 
     private Field subjectVariable;
 
@@ -30,6 +32,11 @@ public class Where implements Node {
 
     public void setObjectVariable(Field objectVariable) {
         this.objectVariable = objectVariable;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override
