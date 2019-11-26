@@ -5,6 +5,12 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import org.antlr.v4.runtime.tree.ErrorNode;
 
 public class SparqlBaseListener implements SparqlListener {
+	@Override public void enterConstString(SparqlParser.ConstStringContext ctx) { }
+	@Override public void exitConstString(SparqlParser.ConstStringContext ctx) { }
+
+	@Override public void enterWhereCondition(SparqlParser.WhereConditionContext ctx) { }
+	@Override public void exitWhereCondition(SparqlParser.WhereConditionContext ctx) { }
+
 	@Override public void enterWhereItem(SparqlParser.WhereItemContext ctx) { }
 	@Override public void exitWhereItem(SparqlParser.WhereItemContext ctx) { }
 
@@ -19,6 +25,9 @@ public class SparqlBaseListener implements SparqlListener {
 
 	@Override public void enterSelectItem(SparqlParser.SelectItemContext ctx) { }
 	@Override public void exitSelectItem(SparqlParser.SelectItemContext ctx) { }
+
+	@Override public void enterVariable(SparqlParser.VariableContext ctx) { }
+	@Override public void exitVariable(SparqlParser.VariableContext ctx) { }
 
 	@Override public void enterSubjectItem(SparqlParser.SubjectItemContext ctx) { }
 	@Override public void exitSubjectItem(SparqlParser.SubjectItemContext ctx) { }

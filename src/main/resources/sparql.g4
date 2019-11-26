@@ -12,18 +12,30 @@ selectItem
     ;
 
 whereItem
-    : BRACE_OPEN subjectItem predicateItem objectItem BRACE_CLOSE
+    : BRACE_OPEN (whereCondition)* BRACE_CLOSE
+    ;
+
+whereCondition
+    : subjectItem predicateItem objectItem DOT
     ;
 
 subjectItem
-    : QUESTION_MARK IDENTIFIER
+    : variable | constString
     ;
 
 predicateItem
-    : QUESTION_MARK IDENTIFIER
+    : variable | constString
     ;
 
 objectItem
+    : variable | constString
+    ;
+
+constString
+    : IDENTIFIER
+    ;
+
+variable
     : QUESTION_MARK IDENTIFIER
     ;
 
@@ -38,6 +50,7 @@ DEFAULT_RELATION: '<http://www.kapok.com>';
 QUESTION_MARK: '?';
 BRACE_OPEN: '{';
 BRACE_CLOSE: '}';
+DOT: '.';
 
 IDENTIFIER
     : (LETTER | '_') (LETTER | DIGIT | '_' | '@' | ':')*

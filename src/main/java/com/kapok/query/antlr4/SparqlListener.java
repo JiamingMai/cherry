@@ -2,6 +2,12 @@ package com.kapok.query.antlr4;// Generated from sparql.g4 by ANTLR 4.0
 import org.antlr.v4.runtime.tree.*;
 
 public interface SparqlListener extends ParseTreeListener {
+	void enterConstString(SparqlParser.ConstStringContext ctx);
+	void exitConstString(SparqlParser.ConstStringContext ctx);
+
+	void enterWhereCondition(SparqlParser.WhereConditionContext ctx);
+	void exitWhereCondition(SparqlParser.WhereConditionContext ctx);
+
 	void enterWhereItem(SparqlParser.WhereItemContext ctx);
 	void exitWhereItem(SparqlParser.WhereItemContext ctx);
 
@@ -16,6 +22,9 @@ public interface SparqlListener extends ParseTreeListener {
 
 	void enterSelectItem(SparqlParser.SelectItemContext ctx);
 	void exitSelectItem(SparqlParser.SelectItemContext ctx);
+
+	void enterVariable(SparqlParser.VariableContext ctx);
+	void exitVariable(SparqlParser.VariableContext ctx);
 
 	void enterSubjectItem(SparqlParser.SubjectItemContext ctx);
 	void exitSubjectItem(SparqlParser.SubjectItemContext ctx);

@@ -55,12 +55,33 @@ public class AstBuilder extends SparqlBaseVisitor<Node> {
     @Override
     public Node visitWhereItem(SparqlParser.WhereItemContext ctx) {
         Where where = new Where();
-        Field subjectField = new Field(ctx.subjectItem().IDENTIFIER().getText());
-        Field predicateField = new Field(ctx.predicateItem().IDENTIFIER().getText());
-        Field objectField = new Field(ctx.objectItem().IDENTIFIER().getText());
-        where.setSubjectVariable(subjectField);
-        where.setPredicateVariable(predicateField);
-        where.setObjectVariable(objectField);
+        List<WhereCondition> whereConditions = new ArrayList<>();
+        List<SparqlParser.WhereConditionContext> whereConditionContexts = ctx.whereCondition();
+        for (SparqlParser.WhereConditionContext whereConditionContext : whereConditionContexts) {
+            Field subjectField;
+            Field predicateField;
+            Field objectField;
+            if (null != whereConditionContext.subjectItem().constString()) {
+                subjectField = new Field(whereConditionContext.subjectItem().constString().IDENTIFIER().getText());
+            } else {
+                subjectField = new VariableField(whereConditionContext.subjectItem().variable().IDENTIFIER().getText());
+            }
+            if (null != whereConditionContext.predicateItem().constString()) {
+                predicateField = new Field(whereConditionContext.predicateItem().constString().IDENTIFIER().getText());
+            } else {
+                predicateField = new VariableField(whereConditionContext.predicateItem().variable().IDENTIFIER().getText());
+            }
+            if (null != whereConditionContext.objectItem().constString()) {
+                objectField = new Field(whereConditionContext.objectItem().constString().IDENTIFIER().getText());
+            } else {
+                objectField = new VariableField(whereConditionContext.objectItem().variable().IDENTIFIER().getText());
+            }
+            WhereCondition whereCondition = new WhereCondition();
+            whereCondition.setSubjectVariable(subjectField);
+            whereCondition.setPredicateVariable(predicateField);
+            whereCondition.setObjectVariable(objectField);
+            whereConditions.add(whereCondition);
+        }
         return where;
     }
 }
