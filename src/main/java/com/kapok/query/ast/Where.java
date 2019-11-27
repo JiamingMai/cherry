@@ -1,8 +1,10 @@
 package com.kapok.query.ast;
 
+import com.kapok.query.parser.AstVisitor;
+
 import java.util.List;
 
-public class Where implements Node {
+public class Where implements Element {
 
     private List<WhereCondition> whereConditions;
 
@@ -12,6 +14,11 @@ public class Where implements Node {
 
     public void setWhereConditions(List<WhereCondition> whereConditions) {
         this.whereConditions = whereConditions;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

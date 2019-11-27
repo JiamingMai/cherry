@@ -1,6 +1,8 @@
 package com.kapok.query.ast;
 
-public class WhereCondition implements Node {
+import com.kapok.query.parser.AstVisitor;
+
+public class WhereCondition implements Element {
 
     private Field subjectVariable;
 
@@ -30,6 +32,11 @@ public class WhereCondition implements Node {
 
     public void setObjectVariable(Field objectVariable) {
         this.objectVariable = objectVariable;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

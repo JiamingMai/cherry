@@ -1,2 +1,12 @@
 T3:person2 isNamed James
 T8:publication2 hasAuthor person2
+T3:person2 isNamed James
+T2:person1 livesIn Washington
+T2:person1 livesIn Washington
+T1:person1 isNamed Tom
+T5:Tom isFriendof James
+T3:person2 isNamed James
+T5:Tom isFriendof James
+T3:person2 isNamed James
+T3:person2 isNamed James
+T9:publication1 hasCitation publication2

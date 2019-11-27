@@ -1,6 +1,8 @@
 package com.kapok.query.ast;
 
-public class Field implements Node {
+import com.kapok.query.parser.AstVisitor;
+
+public class Field implements Element {
 
     private String value;
 
@@ -24,6 +26,11 @@ public class Field implements Node {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public <T> T accept(AstVisitor<T> visitor) {
+        return visitor.visit(this);
     }
 
     @Override

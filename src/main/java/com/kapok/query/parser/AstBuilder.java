@@ -7,10 +7,10 @@ import com.kapok.query.ast.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AstBuilder extends SparqlBaseVisitor<Node> {
+public class AstBuilder extends SparqlBaseVisitor<Element> {
 
     @Override
-    public Node visitQuery(SparqlParser.QueryContext ctx) {
+    public Element visitQuery(SparqlParser.QueryContext ctx) {
         Query query = new Query();
 
         // build SELECT node
@@ -19,32 +19,32 @@ public class AstBuilder extends SparqlBaseVisitor<Node> {
         List<SparqlParser.SelectItemContext> selectItems = ctx.selectItem();
         for (int i = 0; i < selectItems.size(); i++) {
             SparqlParser.SelectItemContext selectItemContext = selectItems.get(i);
-            Node field = selectItemContext.accept(this);
+            Element field = selectItemContext.accept(this);
             fields.add((Field) field);
         }
         select.setSelectItems(fields);
         query.setSelect(select);
 
         // build FROM node
-        Node from = ctx.relation().accept(this);
+        Element from = ctx.relation().accept(this);
         query.setFrom((From) from);
 
         // build WHERE node
-        Node where = ctx.whereItem().accept(this);
+        Element where = ctx.whereItem().accept(this);
         query.setWhere((Where) where);
 
         return query;
     }
 
     @Override
-    public Node visitSelectItem(SparqlParser.SelectItemContext ctx) {
+    public Element visitSelectItem(SparqlParser.SelectItemContext ctx) {
         Field field = new Field();
         field.setValue(ctx.IDENTIFIER().getText());
         return field;
     }
 
     @Override
-    public Node visitRelation(SparqlParser.RelationContext ctx) {
+    public Element visitRelation(SparqlParser.RelationContext ctx) {
         From from = new From();
         Field field = new Field();
         field.setValue(ctx.DEFAULT_RELATION().getText());
@@ -53,7 +53,7 @@ public class AstBuilder extends SparqlBaseVisitor<Node> {
     }
 
     @Override
-    public Node visitWhereItem(SparqlParser.WhereItemContext ctx) {
+    public Element visitWhereItem(SparqlParser.WhereItemContext ctx) {
         Where where = new Where();
         List<WhereCondition> whereConditions = new ArrayList<>();
         List<SparqlParser.WhereConditionContext> whereConditionContexts = ctx.whereCondition();
@@ -82,6 +82,7 @@ public class AstBuilder extends SparqlBaseVisitor<Node> {
             whereCondition.setObjectVariable(objectField);
             whereConditions.add(whereCondition);
         }
+        where.setWhereConditions(whereConditions);
         return where;
     }
 }
