@@ -18,9 +18,10 @@ public class Node {
 
     private StorageManager storageManager = new StorageManager();
 
-    public Node(int nodeId, String host) {
+    public Node(int nodeId, String host, int port) {
         this.nodeId = nodeId;
         this.host = host;
+        this.port = port;
     }
 
     public int getNodeId() {

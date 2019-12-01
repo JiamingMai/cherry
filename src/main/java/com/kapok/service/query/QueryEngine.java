@@ -11,14 +11,21 @@ import com.kapok.service.store.HyperGraph;
 import com.kapok.service.store.RDF;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 
+@Service
 public class QueryEngine {
 
+    @Autowired
     private NodeManager nodeManager;
+
+    public QueryEngine() {
+    }
 
     public QueryEngine(NodeManager nodeManager) {
         this.nodeManager = nodeManager;

@@ -45,6 +45,10 @@ public class StorageManager {
         */
     }
 
+    public HyperGraph readRdfInfo() {
+        return readRdfInfo(DEFAULT_FILE_NAME);
+    }
+
     public HyperGraph readRdfInfo(String rdfFileName) {
         InputStream inputStream = ClassLoader.getSystemResourceAsStream(rdfFileName);
         HyperGraph hyperGraph = new HyperGraph();

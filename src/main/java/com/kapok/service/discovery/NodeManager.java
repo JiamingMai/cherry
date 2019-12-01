@@ -1,24 +1,21 @@
 package com.kapok.service.discovery;
 
 import com.kapok.service.store.RDF;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
+@Service
 public class NodeManager {
 
     private int nodeNum = 3;
 
+    private Node coortinatorNode;
+
     private HttpCommandHandler httpCommandHandler = new HttpCommandHandler();
-
-    public NodeManager() {
-    }
-
-    public NodeManager(int nodeNum) {
-        this.nodeNum = nodeNum;
-    }
 
     /**
      * mapping node to a set of RDF records
@@ -32,12 +29,19 @@ public class NodeManager {
      */
     private final Map<String, Set<Node>> rdfTable = new HashMap<>();
 
+    public NodeManager() {
+    }
+
+    public NodeManager(int nodeNum) {
+        this.nodeNum = nodeNum;
+    }
+
     public void addNode(Node node) {
         nodeTable.put(node, new HashSet<>());
     }
 
     public synchronized void addRDF(int nodeId, RDF rdf) {
-        Node node = new Node(nodeId, "localhost");
+        Node node = new Node(nodeId, "localhost", 8080);
         Set<String> rdfs = nodeTable.get(node);
         if (null == rdfs) {
             rdfs = new HashSet<>();
@@ -80,5 +84,13 @@ public class NodeManager {
     public Map<String, Set<Node>> getRdfTable() {
         // TODO: use a copied map (snapshot) to avoid modifying
         return rdfTable;
+    }
+
+    public Node getCoortinatorNode() {
+        return coortinatorNode;
+    }
+
+    public void setCoortinatorNode(Node coortinatorNode) {
+        this.coortinatorNode = coortinatorNode;
     }
 }

@@ -25,9 +25,8 @@ public class WorkerController {
     @RequestMapping(method = RequestMethod.GET, value = "/loadRdfs")
     @ResponseBody
     public HyperGraph loadRdfs() {
-        // TODO: implement this method
-        System.out.println("Test: loadRdfs is called.");
-        return null;
+        System.out.println("loadRdfs is called.");
+        return storageManager.readRdfInfo();
     }
 
 }

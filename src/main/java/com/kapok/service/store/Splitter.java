@@ -1,16 +1,23 @@
 package com.kapok.service.store;
 
 import com.kapok.service.discovery.NodeManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class Splitter {
 
+    @Autowired
     private NodeManager nodeManager;
 
     private final int DEFAULT_BLOCK_SIZE = 64;
 
     private final int DEFAULT_CHUNK_SIZE_PER_NODE = 10;
+
+    public Splitter() {
+    }
 
     public Splitter(NodeManager nodeManager) {
         this.nodeManager = nodeManager;
@@ -173,4 +180,7 @@ public class Splitter {
         return subjectSet;
     }
 
+    public NodeManager getNodeManager() {
+        return nodeManager;
+    }
 }

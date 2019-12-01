@@ -1,4 +1,4 @@
-package com.kapok;
+package com.kapok.service.query;
 
 import com.kapok.service.query.QueryEngine;
 import com.kapok.service.query.QueryResult;
