@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
+import java.util.Set;
 
 @Controller
 public class CoordinatorController {
@@ -52,7 +53,23 @@ public class CoordinatorController {
      * this API is used for inserting data
      */
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
-    public void insert() {
+    public void insert(String rdfsText) {
+        if (!serverConfig.getRole().equals("coordinator")) {
+            System.out.println("Unsupported operation.");
+        }
+        System.out.println("insert");
+        StorageManager storageManager = splitter.getNodeManager().getCoortinatorNode().getStorageManager();
+        HyperGraph hyperGraph = storageManager.readRdfInfoFromText(rdfsText);
+        Set<String> predicates = hyperGraph.getPredicateEdges().keySet();
+        for (String predicate : predicates) {
+            splitter.split(hyperGraph, predicate);
+        }
+    }
+
+    /**
+     * this API is used for inserting data
+     */
+    public void insertFromLocalData() {
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
         }
@@ -61,7 +78,7 @@ public class CoordinatorController {
         String rdfFileName = "data.rdf";
         StorageManager storageManager = splitter.getNodeManager().getCoortinatorNode().getStorageManager();
         HyperGraph hyperGraph = storageManager.readRdfInfo(rdfFileName);
-        String[] predicates = {"isNamed", "livesIn", "isFriendof", "hasAuthor", "hasCitation"};
+        Set<String> predicates = hyperGraph.getPredicateEdges().keySet();
         for (String predicate : predicates) {
             splitter.split(hyperGraph, predicate);
         }

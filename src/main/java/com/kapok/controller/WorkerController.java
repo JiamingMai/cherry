@@ -1,5 +1,6 @@
 package com.kapok.controller;
 
+import com.kapok.model.vo.QueryParam;
 import com.kapok.service.discovery.StorageManager;
 import com.kapok.service.store.HyperGraph;
 import com.kapok.service.store.RDF;
@@ -26,7 +27,8 @@ public class WorkerController {
     @ResponseBody
     public HyperGraph loadRdfs() {
         System.out.println("loadRdfs is called.");
-        return storageManager.readRdfInfo();
+        HyperGraph hyperGraph = storageManager.readRdfInfo();
+        return hyperGraph;
     }
 
 }

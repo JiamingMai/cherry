@@ -1,6 +1,8 @@
 package com.kapok.model.vo;
 
-public class QueryParam {
+import java.io.Serializable;
+
+public class QueryParam implements Serializable {
 
     private String sparql;
 

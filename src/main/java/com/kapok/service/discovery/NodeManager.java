@@ -40,8 +40,7 @@ public class NodeManager {
         nodeTable.put(node, new HashSet<>());
     }
 
-    public synchronized void addRDF(int nodeId, RDF rdf) {
-        Node node = new Node(nodeId, "localhost", 8080);
+    public synchronized void addRDF(Node node, RDF rdf) {
         Set<String> rdfs = nodeTable.get(node);
         if (null == rdfs) {
             rdfs = new HashSet<>();
@@ -64,12 +63,12 @@ public class NodeManager {
         return nodeTable.get(nodeId).contains(rdf);
     }
 
-    public synchronized Optional<Integer> getNodeIdByRDF(RDF rdf) {
+    public synchronized Optional<Node> getNodeIdByRDF(RDF rdf) {
         Set<Node> nodes = rdfTable.get(rdf.getId());
         if (null == nodes || nodes.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(nodes.stream().findFirst().get().getNodeId());
+        return Optional.of(nodes.stream().findFirst().get());
     }
 
     public int getNodeNum() {
@@ -84,6 +83,16 @@ public class NodeManager {
     public Map<String, Set<Node>> getRdfTable() {
         // TODO: use a copied map (snapshot) to avoid modifying
         return rdfTable;
+    }
+
+    public Node getRandomNode() {
+        int selectedNodeId = (int) (Math.random() * nodeNum);
+        for (Node node : nodeTable.keySet()) {
+            if (node.getNodeId() == selectedNodeId) {
+                return node;
+            }
+        }
+        return null;
     }
 
     public Node getCoortinatorNode() {

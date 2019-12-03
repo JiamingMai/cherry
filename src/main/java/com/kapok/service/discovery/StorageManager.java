@@ -7,10 +7,7 @@ import com.kapok.service.store.HyperVertex;
 import com.kapok.service.store.RDF;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
 @Service
@@ -45,16 +42,10 @@ public class StorageManager {
         */
     }
 
-    public HyperGraph readRdfInfo() {
-        return readRdfInfo(DEFAULT_FILE_NAME);
-    }
-
-    public HyperGraph readRdfInfo(String rdfFileName) {
-        InputStream inputStream = ClassLoader.getSystemResourceAsStream(rdfFileName);
+    public HyperGraph readRdfInfoFromText(String text) {
         HyperGraph hyperGraph = new HyperGraph();
-        Scanner scanner = new Scanner(inputStream);
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+        String[] lines = text.split("\n");
+        for (String line : lines) {
             String[] fields = line.split(":");
             String id = fields[0];
             String content = fields[1];
@@ -65,8 +56,36 @@ public class StorageManager {
             RDF rdf = new RDF(id, subject, predicate, object);
             hyperGraph.addVertex(new HyperVertex(rdf));
         }
-        //System.out.println(hyperGraph);
         return hyperGraph;
+    }
+
+    public HyperGraph readRdfInfo() {
+        return readRdfInfo(DEFAULT_FILE_NAME);
+    }
+
+    public HyperGraph readRdfInfo(String rdfFileName) {
+        try {
+            InputStream inputStream = new FileInputStream(this.getClass().getClassLoader().getResource(rdfFileName).getFile());
+            HyperGraph hyperGraph = new HyperGraph();
+            Scanner scanner = new Scanner(inputStream);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] fields = line.split(":");
+                String id = fields[0];
+                String content = fields[1];
+                String[] rdfElements = content.split(" ");
+                String subject = rdfElements[0];
+                String predicate = rdfElements[1];
+                String object = rdfElements[2];
+                RDF rdf = new RDF(id, subject, predicate, object);
+                hyperGraph.addVertex(new HyperVertex(rdf));
+            }
+            //System.out.println(hyperGraph);
+            return hyperGraph;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public synchronized void saveRdfInfo(RDF rdf) {

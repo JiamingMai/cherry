@@ -1,5 +1,6 @@
 package com.kapok.service.store;
 
+import com.kapok.service.discovery.Node;
 import com.kapok.service.discovery.NodeManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,12 +38,12 @@ public class Splitter {
                 for (String subject : subjectBlock.keySet()) {
                     Map<String, HyperEdge> objectSet = findObjectSetByPredicateAndSubject(hyperGraph.getObjectEdge(), subject, predicate);
                     // Step 4. Choose slave node to store data
-                    Optional<Integer> nodeIndex = chooseSlave(subject, objectSet, predecessorSet);
+                    Optional<Node> node = chooseSlave(subject, objectSet, predecessorSet);
                     // Step 5. Place the triples in slave i
-                    if (null == nodeIndex.get()) {
+                    if (null == node.get()) {
                         // TODO: divide object set into k sub object sets
                     } else {
-                        saveTriples(objectSet.values(), nodeIndex.get());
+                        saveTriples(objectSet.values(), node.get());
                     }
                     // save this object set to the object full set
                     for (Map.Entry<String, HyperEdge> entry : objectSet.entrySet()) {
@@ -109,18 +110,18 @@ public class Splitter {
         return blockSet;
     }
 
-    private void saveTriples(Collection<HyperEdge> hyperEdges, int nodeId) {
+    private void saveTriples(Collection<HyperEdge> hyperEdges, Node node) {
         Set<HyperVertex> triples = new HashSet<>();
         for (HyperEdge hyperEdge : hyperEdges) {
             triples.addAll(hyperEdge.getVertices());
         }
         // save triples in slave i
         for (HyperVertex hyperVertex : triples) {
-            nodeManager.addRDF(nodeId, hyperVertex.getRdf());
+            nodeManager.addRDF(node, hyperVertex.getRdf());
         }
     }
 
-    private Optional<Integer> chooseSlave(String subject, Map<String, HyperEdge> objectSet, Map<String, HyperEdge> predecessorSet) {
+    private Optional<Node> chooseSlave(String subject, Map<String, HyperEdge> objectSet, Map<String, HyperEdge> predecessorSet) {
         if (objectSet.size() > DEFAULT_CHUNK_SIZE_PER_NODE) {
             return Optional.empty();
         }
@@ -130,17 +131,16 @@ public class Splitter {
                 if (hyperVertex.getRdf().getObject().equals(subject)) {
                     // here we need a map to record the relation from vertex to nodeId
                     // vertex --> nodeId
-                    Optional<Integer> nodeId = nodeManager.getNodeIdByRDF(hyperVertex.getRdf());
-                    if (null != nodeId.get()) {
-                        return nodeId;
+                    Optional<Node> node = nodeManager.getNodeIdByRDF(hyperVertex.getRdf());
+                    if (null != node.get()) {
+                        return node;
                     }
                 }
             }
         }
         // no related predecessor found, we find the node with maximal space instead
         // TODO: now we use random policy for debugging temporarily
-        int selectedNodeId = (int) (Math.random() * nodeManager.getNodeNum());
-        return Optional.of(selectedNodeId);
+        return Optional.of(nodeManager.getRandomNode());
     }
 
     private Map<String, HyperEdge> findObjectSetByPredicateAndSubject(
