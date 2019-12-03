@@ -34,7 +34,7 @@ public class ServerInitializer implements InitializingBean {
             e.printStackTrace();
         }
 
-        // register all the nodes on the coordinator
+        // register itself to the coordinator
         if (serverConfig.getRole().equals(RoleType.COORDINATOR.name())) {
             // initialize coordinator
             String[] hostAndPort = serverConfig.getAddress().split(":");
@@ -42,6 +42,15 @@ public class ServerInitializer implements InitializingBean {
             int port = Integer.valueOf(hostAndPort[1]);
             Node coordinatorNode = new Node(1, host, port);
             splitter.getNodeManager().setCoortinatorNode(coordinatorNode);
+        }
+
+        // register worker node to the coordinator
+        if (serverConfig.getRole().equals(RoleType.COORDINATOR.name())) {
+            String[] hostAndPort = serverConfig.getAddress().split(":");
+            String host = hostAndPort[0];
+            int port = Integer.valueOf(hostAndPort[1]);
+            Node coordinatorNode = new Node(1, host, port);
+            // TODO: send a register command to coordinator
         }
     }
 

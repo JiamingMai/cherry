@@ -36,6 +36,7 @@ public class CoordinatorController {
     @RequestMapping(method = RequestMethod.GET, value = "/query")
     @ResponseBody
     public QueryResult query(@RequestBody QueryParam queryParam) {
+        // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
         }
@@ -54,6 +55,7 @@ public class CoordinatorController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
     public void insert(String rdfsText) {
+        // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
         }
