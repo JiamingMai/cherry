@@ -90,10 +90,8 @@ public class StorageManager {
 
     public synchronized void saveRdfInfo(RDF rdf) {
         if (!savedRdfs.contains(rdf.getId())) {
-            String resourcesPath = ClassLoader.getSystemResource(DEFAULT_FILE_NAME).getPath();
-            resourcesPath = resourcesPath.substring(0, resourcesPath.lastIndexOf(DEFAULT_FILE_NAME));
-            String outputFileName = DEFAULT_FILE_NAME;
-            try (PrintWriter out = new PrintWriter(new FileOutputStream(new File(resourcesPath, outputFileName), true))) {
+            String outputFileName = this.getClass().getClassLoader().getResource(DEFAULT_FILE_NAME).getFile();
+            try (PrintWriter out = new PrintWriter(new FileOutputStream(new File(outputFileName), true))) {
                 out.println(rdf.getId() + ":" + rdf.getSubject() + " " + rdf.getPredicate() + " " + rdf.getObject());
                 savedRdfs.add(rdf.getId());
             } catch (Exception e) {

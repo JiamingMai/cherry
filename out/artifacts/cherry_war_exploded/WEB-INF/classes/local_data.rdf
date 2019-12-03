@@ -42,3 +42,5 @@ T3:person2 isNamed James
 T4:person2 livesIn Washington
 T5:Tom isFriendof James
 T9:publication1 hasCitation publication2
+1:person1 isNamed Jim
+T1:person1 isNamed Jim

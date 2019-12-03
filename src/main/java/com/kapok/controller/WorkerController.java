@@ -18,6 +18,7 @@ public class WorkerController {
     private StorageManager storageManager;
 
     @RequestMapping(method = RequestMethod.POST, value = "/saveRdfs")
+    @ResponseBody
     public void saveRdfs(@RequestBody RDF rdf) {
         System.out.println("saveRdfs is called.");
         storageManager.saveRdfInfo(rdf);
