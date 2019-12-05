@@ -9,6 +9,8 @@ public class ServerConfig {
 
     private String address;
 
+    private String coordinatorAddress;
+
     public String getRole() {
         return role;
     }
@@ -23,5 +25,13 @@ public class ServerConfig {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCoordinatorAddress() {
+        return coordinatorAddress;
+    }
+
+    public void setCoordinatorAddress(String coordinatorAddress) {
+        this.coordinatorAddress = coordinatorAddress;
     }
 }

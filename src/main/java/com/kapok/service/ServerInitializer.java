@@ -1,5 +1,6 @@
 package com.kapok.service;
 
+import com.kapok.service.discovery.HttpCommandUtil;
 import com.kapok.service.discovery.Node;
 import com.kapok.service.store.Splitter;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,12 +31,13 @@ public class ServerInitializer implements InitializingBean {
             props.load(new InputStreamReader(new FileInputStream(configFile), "UTF-8"));
             serverConfig.setRole(props.getProperty("role"));
             serverConfig.setAddress(props.getProperty("address"));
+            serverConfig.setCoordinatorAddress(props.getProperty("coordinator.address"));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // register itself to the coordinator
-        if (serverConfig.getRole().equals(RoleType.COORDINATOR.name())) {
+        if (serverConfig.getRole().equalsIgnoreCase(RoleType.COORDINATOR.name())) {
             // initialize coordinator
             String[] hostAndPort = serverConfig.getAddress().split(":");
             String host = hostAndPort[0];
@@ -45,12 +47,17 @@ public class ServerInitializer implements InitializingBean {
         }
 
         // register worker node to the coordinator
-        if (serverConfig.getRole().equals(RoleType.COORDINATOR.name())) {
+        if (serverConfig.getRole().equalsIgnoreCase(RoleType.WORKER.name())) {
             String[] hostAndPort = serverConfig.getAddress().split(":");
             String host = hostAndPort[0];
             int port = Integer.valueOf(hostAndPort[1]);
-            Node coordinatorNode = new Node(1, host, port);
-            // TODO: send a register command to coordinator
+            Node workerNode = new Node(1, host, port);
+            // send a register command to coordinator
+            String[] coordinatorHostAndPort = serverConfig.getAddress().split(":");
+            String coordinatorHost = coordinatorHostAndPort[0];
+            int coordinatorPort = Integer.valueOf(coordinatorHostAndPort[1]);
+            Node coordinatorNode = new Node(1, coordinatorHost, coordinatorPort);
+            HttpCommandUtil.sendRegisterWorkerCommand(coordinatorNode, workerNode);
         }
     }
 

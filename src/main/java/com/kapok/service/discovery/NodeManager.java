@@ -3,9 +3,6 @@ package com.kapok.service.discovery;
 import com.kapok.service.store.RDF;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.*;
 
 @Service
@@ -14,8 +11,6 @@ public class NodeManager {
     private int nodeNum = 3;
 
     private Node coortinatorNode;
-
-    private HttpCommandHandler httpCommandHandler = new HttpCommandHandler();
 
     /**
      * mapping node to a set of RDF records
@@ -56,7 +51,7 @@ public class NodeManager {
         rdfTable.put(rdf.getId(), nodes);
 
         // send a HTTP POST request to save the rdf on the concrete node
-        httpCommandHandler.sendSaveRdfsCommand(node, rdf);
+        HttpCommandUtil.sendSaveRdfsCommand(node, rdf);
     }
 
     private synchronized boolean contains(int nodeId, RDF rdf) {

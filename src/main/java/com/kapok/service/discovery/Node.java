@@ -1,8 +1,10 @@
 package com.kapok.service.discovery;
 
+import java.beans.Transient;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Node {
+public class Node implements Serializable {
 
     private Integer nodeId;
 
@@ -16,7 +18,10 @@ public class Node {
      */
     private Integer port;
 
-    private StorageManager storageManager = new StorageManager();
+    private transient StorageManager storageManager = new StorageManager();
+
+    public Node() {
+    }
 
     public Node(int nodeId, String host, int port) {
         this.nodeId = nodeId;
@@ -24,12 +29,20 @@ public class Node {
         this.port = port;
     }
 
-    public int getNodeId() {
+    public Integer getNodeId() {
         return nodeId;
+    }
+
+    public void setNodeId(Integer nodeId) {
+        this.nodeId = nodeId;
     }
 
     public String getHost() {
         return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 
     public Integer getPort() {
@@ -38,6 +51,10 @@ public class Node {
 
     public void setPort(Integer port) {
         this.port = port;
+    }
+
+    public void setStorageManager(StorageManager storageManager) {
+        this.storageManager = storageManager;
     }
 
     public StorageManager getStorageManager() {

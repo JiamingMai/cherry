@@ -10,12 +10,10 @@ import com.kapok.service.store.HyperGraph;
 import com.kapok.service.store.Splitter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -88,11 +86,14 @@ public class CoordinatorController {
 
     /**
      * this API is used for registering worker dynamically
-     * @param node the node to be registered
+     * @param nodes the nodes to be registered
      */
     @RequestMapping(method = RequestMethod.POST, value = "/registerWorker")
-    public void registerWorker(@RequestBody Node node) {
-        splitter.getNodeManager().addNode(node);
+    @ResponseBody
+    public void registerWorker(@RequestBody List<Node> nodes) {
+        for (Node node : nodes) {
+            splitter.getNodeManager().addNode(node);
+        }
     }
 
 }
