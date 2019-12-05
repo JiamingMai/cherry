@@ -8,8 +8,6 @@ import java.util.*;
 @Service
 public class NodeManager {
 
-    private int nodeNum = 3;
-
     private Node coortinatorNode;
 
     /**
@@ -27,12 +25,10 @@ public class NodeManager {
     public NodeManager() {
     }
 
-    public NodeManager(int nodeNum) {
-        this.nodeNum = nodeNum;
-    }
-
     public void addNode(Node node) {
-        nodeTable.put(node, new HashSet<>());
+        if (!nodeTable.containsKey(node)) {
+            nodeTable.put(node, new HashSet<>());
+        }
     }
 
     public synchronized void addRDF(Node node, RDF rdf) {
@@ -67,7 +63,7 @@ public class NodeManager {
     }
 
     public int getNodeNum() {
-        return nodeNum;
+        return nodeTable.keySet().size();
     }
 
     public Map<Node, Set<String>> getNodeTable() {
@@ -81,13 +77,13 @@ public class NodeManager {
     }
 
     public Node getRandomNode() {
-        int selectedNodeId = (int) (Math.random() * nodeNum);
-        for (Node node : nodeTable.keySet()) {
-            if (node.getNodeId() == selectedNodeId) {
-                return node;
-            }
+        int selectedNodeId = (int) (Math.random() * getNodeNum());
+        Iterator<Node> iterator = nodeTable.keySet().iterator();
+        for (int i = 0; i < selectedNodeId; i++) {
+            iterator.next();
         }
-        return null;
+        Node node = iterator.next();
+        return node;
     }
 
     public Node getCoortinatorNode() {

@@ -1,5 +1,6 @@
 package com.kapok.service.discovery;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kapok.service.store.RDF;
@@ -33,10 +34,9 @@ public class HttpCommandUtil {
         try {
             client = HttpClients.createDefault();
             HttpPost post = new HttpPost(url);
-            StringEntity entity = new UrlEncodedFormEntity(new ArrayList<>(), "UTF-8");
+            StringEntity entity =new StringEntity(JSON.toJSONString(rdf));
             post.setEntity(entity);
-            post.setHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8"));
-            post.setHeader(new BasicHeader("Accept", "text/plain;charset=utf-8"));
+            post.setHeader(new BasicHeader("Content-Type", "application/json;charset=utf-8"));
             response = client.execute(post);
             int statusCode = response.getStatusLine().getStatusCode();
             if (SUCCESS_CODE == statusCode) {

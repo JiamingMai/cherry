@@ -52,7 +52,7 @@ public class CoordinatorController {
      * this API is used for inserting data
      */
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
-    public void insert(String rdfsText) {
+    public void insert(@RequestBody String rdfsText) {
         // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
