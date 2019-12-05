@@ -1,6 +1,7 @@
 *.iml
 *.ipr
 *.iws
+out/
 target/
 /var
 /*/var/
@@ -25,3 +26,4 @@ benchmark_outputs
 .mvn/timing.properties
 .editorconfig
 node_modules
+>>>>>>> 4e900c3fa08ba3c8eeac6f0ced08b952f88a5528
