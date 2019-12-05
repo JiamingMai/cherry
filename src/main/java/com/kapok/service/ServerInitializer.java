@@ -53,7 +53,7 @@ public class ServerInitializer implements InitializingBean {
             int port = Integer.valueOf(hostAndPort[1]);
             Node workerNode = new Node(1, host, port);
             // send a register command to coordinator
-            String[] coordinatorHostAndPort = serverConfig.getAddress().split(":");
+            String[] coordinatorHostAndPort = serverConfig.getCoordinatorAddress().split(":");
             String coordinatorHost = coordinatorHostAndPort[0];
             int coordinatorPort = Integer.valueOf(coordinatorHostAndPort[1]);
             Node coordinatorNode = new Node(1, coordinatorHost, coordinatorPort);
