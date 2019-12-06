@@ -103,6 +103,8 @@
                 <includes>
                     <include>**/*.rdf</include>
                     <include>**/*.properties</include>
+                    <include>**/*.css</include>
+                    <include>**/*.html</include>
                 </includes>
             </resource>
         </resources>

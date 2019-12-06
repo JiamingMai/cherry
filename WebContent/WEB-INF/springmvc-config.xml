@@ -17,12 +17,16 @@
     <context:component-scan base-package="com.kapok"/>
     <!-- 默认装配方案 -->
     <mvc:annotation-driven/>
+
+    <mvc:resources location="/static/" mapping="/static/**" />
+
     <!-- 静态资源处理 -->
-    <mvc:default-servlet-handler/>
+    <!--<mvc:default-servlet-handler/>-->
 
     <!-- 视图解析器  p:prefix属性表示前缀  p:suffix 表示后缀  -->
-    <bean id="viewResolver"
+    <!--<bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/content/" p:suffix=".jsp"/>
+    -->
 
 </beans>
