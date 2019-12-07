@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/insert.css">
+    <title>Cherry</title>
+</head>
+<body>
+<div id="header">
+    <a id="logo"></a>
+    <a id="Cherry" href="insert.html">Cherry</a>
+    <a href="overview">Overview</a>
+    <a href="insert.html">Insert</a>
+    <a href="query.html">Query</a>
+</div>
+<div id="insertRegion" class="region">
+    <h2>Insert</h2>
+    <hr/>
+    <p id="description">Just parse your RDFs and submit to Cherry.</p>
+    <form action="/coordinator/insert" method="post">
+        <textarea name="rdfsText"></textarea>
+        <p><input id="submitButton" type="submit" value="Submit"/></p>
+    </form>
+</div>
+</body>
+</html>

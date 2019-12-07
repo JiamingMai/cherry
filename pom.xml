@@ -6,7 +6,14 @@
 
     <groupId>com.kapok</groupId>
     <artifactId>cherry</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>coordinator</module>
+        <module>worker</module>
+        <module>common</module>
+        <module>web</module>
+    </modules>
 
     <properties>
         <spring.mvc.version>5.1.9.RELEASE</spring.mvc.version>
