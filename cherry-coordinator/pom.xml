@@ -9,7 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>common</artifactId>
+    <artifactId>cherry-coordinator</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.kapok</groupId>
+            <artifactId>cherry-worker</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 
 </project>

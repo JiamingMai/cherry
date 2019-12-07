@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>coordinator</module>
-        <module>worker</module>
-        <module>common</module>
-        <module>web</module>
+        <module>cherry-web</module>
+        <module>cherry-coordinator</module>
+        <module>cherry-worker</module>
+        <module>cherry-common</module>
     </modules>
 
     <properties>
