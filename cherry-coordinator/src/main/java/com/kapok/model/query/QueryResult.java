@@ -8,12 +8,22 @@ public class QueryResult implements Serializable {
 
     private List<Record> records = new ArrayList<>();
 
+    private String readableResult;
+
     public void setRecords(List<Record> records) {
         this.records = records;
     }
 
     public List<Record> getRecords() {
         return records;
+    }
+
+    public String getReadableResult() {
+        return readableResult;
+    }
+
+    public void setReadableResult(String readableResult) {
+        this.readableResult = readableResult;
     }
 
     @Override

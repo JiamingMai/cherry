@@ -69,6 +69,7 @@ public class QueryEngine {
         }
         QueryResult queryResult = new QueryResult();
         queryResult.setRecords(records);
+        queryResult.setReadableResult(queryResult.toString());
         return queryResult;
     }
 
