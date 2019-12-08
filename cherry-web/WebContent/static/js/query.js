@@ -7,7 +7,7 @@ $(document).ready(function(){
             data: JSON.stringify(GetJsonData()),
             dataType: "json",
             success: function (message) {
-                $("#result").val(message);
+                $("#result").val(message.readableResult);
                 alert("提交数据成功！");
             },
             error: function (message) {

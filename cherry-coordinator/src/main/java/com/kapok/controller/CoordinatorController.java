@@ -36,7 +36,7 @@ public class CoordinatorController {
      */
     @RequestMapping(method = RequestMethod.POST, value = "/query")
     @ResponseBody
-    public String query(@RequestBody QueryParam queryParam) {
+    public QueryResult query(@RequestBody QueryParam queryParam) {
         // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
@@ -45,7 +45,7 @@ public class CoordinatorController {
         try {
             QueryResult queryResult = queryEngine.query(queryParam.getSparql());
             // TODO: parse the result in front-end codes instead
-            return queryResult.toString();
+            return queryResult;
         } catch (IOException e) {
             e.printStackTrace();
             return null;
