@@ -18,10 +18,10 @@
     <!-- 默认装配方案 -->
     <mvc:annotation-driven/>
 
-    <mvc:resources location="/static/" mapping="/static/**" />
-
     <!-- 静态资源处理 -->
-    <!--<mvc:default-servlet-handler/>-->
+    <!-- <mvc:default-servlet-handler/> -->
+
+    <mvc:resources location="/static/" mapping="/static/**" />
 
     <!-- 视图解析器  p:prefix属性表示前缀  p:suffix 表示后缀  -->
     <!--<bean id="viewResolver"

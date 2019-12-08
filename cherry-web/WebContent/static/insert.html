@@ -3,6 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/insert.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/insert.js"></script>
     <title>Cherry</title>
 </head>
 <body>
@@ -17,10 +19,8 @@
     <h2>Insert</h2>
     <hr/>
     <p id="description">Just parse your RDFs and submit to Cherry.</p>
-    <form action="/coordinator/insert" method="post">
-        <textarea name="rdfsText"></textarea>
-        <p><input id="submitButton" type="submit" value="Submit"/></p>
-    </form>
+    <textarea id="rdfsText" name="rdfsText"></textarea>
+    <p><input id="submitButton" type="submit" value="Submit"/></p>
 </div>
 </body>
 </html>
