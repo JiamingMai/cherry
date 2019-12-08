@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.kapok.model.discovery.Node;
+import com.kapok.model.store.HyperGraph;
 import com.kapok.model.store.RDF;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -20,6 +21,8 @@ public class HttpCommandUtil {
     private static final int SUCCESS_CODE = 200;
 
     private static final String SAVE_URL = "/worker/saveRdfs";
+
+    private static final String LOAD_URL = "/worker/loadRdfs";
 
     private static final String REGISTER_WORKER_URL = "/worker/registerWorker";
 
@@ -60,8 +63,41 @@ public class HttpCommandUtil {
         }
     }
 
-    public static void sendReadRdfsCommand(Node node) {
-        // TODO: implement this method
+    public static HyperGraph sendLoadRdfsCommand(Node node) {
+        String url = "http://" + node.getHost() + ":" + node.getPort() + LOAD_URL;
+        HyperGraph hyperGraph = null;
+        CloseableHttpClient client = null;
+        CloseableHttpResponse response = null;
+        try {
+            client = HttpClients.createDefault();
+            HttpPost post = new HttpPost(url);
+            StringEntity entity =new StringEntity("");
+            post.setEntity(entity);
+            post.setHeader(new BasicHeader("Content-Type", "application/json;charset=utf-8"));
+            response = client.execute(post);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (SUCCESS_CODE == statusCode) {
+                String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+                try {
+                    hyperGraph = (HyperGraph) JSONObject.parse(result);
+                    return hyperGraph;
+                } catch (Exception e) {
+                    return hyperGraph;
+                }
+            } else {
+                System.out.println(String.format("HttpClientService-line: %d, errorMsg：%s", 146, "POST请求失败！"));
+            }
+        } catch (Exception e) {
+            System.out.println(String.format("HttpClientService-line: %d, Exception：%s", 149, e));
+        } finally {
+            try {
+                response.close();
+                client.close();
+            } catch (IOException e) {
+                // ignore this exception
+            }
+        }
+        return hyperGraph;
     }
 
     /**

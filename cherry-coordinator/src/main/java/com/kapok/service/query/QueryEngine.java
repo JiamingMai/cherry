@@ -3,6 +3,7 @@ package com.kapok.service.query;
 import com.kapok.model.discovery.Node;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.store.RDF;
+import com.kapok.service.discovery.HttpCommandUtil;
 import com.kapok.service.discovery.NodeManager;
 import com.kapok.service.query.antlr4.SparqlLexer;
 import com.kapok.service.query.antlr4.SparqlParser;
@@ -47,8 +48,7 @@ public class QueryEngine {
         Set<Node> nodes = nodeManager.getNodeTable().keySet();
         Set<RDF> rdfs = new HashSet<>();
         for (Node node : nodes) {
-            String rdfFileName = node.getNodeId() + ".rdf";
-            HyperGraph hyperGraph = node.getStorageManager().readRdfInfo(rdfFileName);
+            HyperGraph hyperGraph = HttpCommandUtil.sendLoadRdfsCommand(node);
             rdfs.addAll(node.getStorageManager().filter(hyperGraph));
         }
         return convert(rdfs, queryCondition);
