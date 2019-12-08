@@ -4,6 +4,7 @@ import com.kapok.model.discovery.Node;
 import com.kapok.model.query.QueryParam;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.discovery.ServerConfig;
+import com.kapok.model.store.StoreParam;
 import com.kapok.service.query.QueryEngine;
 import com.kapok.service.query.QueryResult;
 import com.kapok.service.store.Splitter;
@@ -53,14 +54,14 @@ public class CoordinatorController {
      * this API is used for inserting data
      */
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
-    public void insert(@RequestBody String rdfsText) {
+    public void insert(@RequestBody StoreParam storeParam) {
         // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
         }
         System.out.println("insert");
         StorageManager storageManager = splitter.getNodeManager().getCoortinatorNode().getStorageManager();
-        HyperGraph hyperGraph = storageManager.readRdfInfoFromText(rdfsText);
+        HyperGraph hyperGraph = storageManager.readRdfInfoFromText(storeParam.getRdfsText());
         Set<String> predicates = hyperGraph.getPredicateEdges().keySet();
         for (String predicate : predicates) {
             splitter.split(hyperGraph, predicate);
