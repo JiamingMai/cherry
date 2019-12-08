@@ -1,6 +1,8 @@
 package com.kapok.service.query;
 
 import com.kapok.model.discovery.Node;
+import com.kapok.model.query.QueryResult;
+import com.kapok.model.query.Record;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.store.RDF;
 import com.kapok.service.discovery.HttpCommandUtil;
@@ -57,9 +59,9 @@ public class QueryEngine {
     private QueryResult convert(Set<RDF> rdfs, QueryCondition queryCondition) {
         rdfs = filter(rdfs, queryCondition);
 
-        List<QueryResult.Record> records = new ArrayList<>();
+        List<Record> records = new ArrayList<>();
         for (RDF rdf : rdfs) {
-            QueryResult.Record record = new QueryResult.Record();
+            Record record = new Record();
             record.add(rdf.getSubject());
             record.add(rdf.getPredicate());
             record.add(rdf.getObject());

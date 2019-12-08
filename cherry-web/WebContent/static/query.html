@@ -3,6 +3,8 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" type="text/css" href="css/query.css">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/query.js"></script>
     <title>Cherry</title>
 </head>
 <body>
@@ -17,13 +19,13 @@
         <h2>Query</h2>
         <hr/>
         <p id="description">Just type your SPARQL and submit to Cherry.</p>
-        <textarea></textarea>
+        <textarea id="sparql" name="sparql">SELECT ?s FROM &lt;http://www.kapok.com&gt; WHERE {?s ?p ?o .}</textarea>
         <p><input id="submitButton" type="submit" value="Submit"/></p>
     </div>
     <div id="resultRegion" class="region">
         <h2>Result</h2>
         <hr/>
-        <textarea></textarea>
+        <textarea id="result"></textarea>
     </div>
 </body>
 </html>

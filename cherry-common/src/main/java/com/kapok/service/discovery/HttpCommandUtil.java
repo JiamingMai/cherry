@@ -7,6 +7,7 @@ import com.kapok.model.discovery.Node;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.store.RDF;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -70,22 +71,20 @@ public class HttpCommandUtil {
         CloseableHttpResponse response = null;
         try {
             client = HttpClients.createDefault();
-            HttpPost post = new HttpPost(url);
-            StringEntity entity =new StringEntity("");
-            post.setEntity(entity);
-            post.setHeader(new BasicHeader("Content-Type", "application/json;charset=utf-8"));
-            response = client.execute(post);
+            HttpGet get = new HttpGet(url);
+            get.setHeader(new BasicHeader("Content-Type", "application/json;charset=utf-8"));
+            response = client.execute(get);
             int statusCode = response.getStatusLine().getStatusCode();
             if (SUCCESS_CODE == statusCode) {
                 String result = EntityUtils.toString(response.getEntity(), "UTF-8");
                 try {
-                    hyperGraph = (HyperGraph) JSONObject.parse(result);
+                    hyperGraph = JSONObject.parseObject(result, HyperGraph.class);
                     return hyperGraph;
                 } catch (Exception e) {
                     return hyperGraph;
                 }
             } else {
-                System.out.println(String.format("HttpClientService-line: %d, errorMsg：%s", 146, "POST请求失败！"));
+                System.out.println(String.format("HttpClientService-line: %d, errorMsg：%s", 146, "GET请求失败！"));
             }
         } catch (Exception e) {
             System.out.println(String.format("HttpClientService-line: %d, Exception：%s", 149, e));
