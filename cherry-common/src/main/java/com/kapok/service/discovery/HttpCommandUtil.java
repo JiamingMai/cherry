@@ -24,7 +24,7 @@ public class HttpCommandUtil {
 
     private static final String LOAD_URL = "/worker/loadRdfs";
 
-    private static final String REGISTER_WORKER_URL = "/worker/registerWorker";
+    private static final String REGISTER_WORKER_URL = "/coordinator/registerWorker";
 
     public static void sendSaveRdfsCommand(Node node, RDF rdf) {
         String url = "http://" + node.getHost() + ":" + node.getPort() + SAVE_URL;
