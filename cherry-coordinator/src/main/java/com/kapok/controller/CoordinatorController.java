@@ -5,8 +5,9 @@ import com.kapok.model.query.QueryParam;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.discovery.ServerConfig;
 import com.kapok.model.store.StoreParam;
+import com.kapok.model.store.StoreResult;
 import com.kapok.service.query.QueryEngine;
-import com.kapok.service.query.QueryResult;
+import com.kapok.model.query.QueryResult;
 import com.kapok.service.store.Splitter;
 import com.kapok.service.store.StorageManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,9 @@ public class CoordinatorController {
     /**
      * this API is used for querying data
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/query")
+    @RequestMapping(method = RequestMethod.POST, value = "/query")
     @ResponseBody
-    public QueryResult query(@RequestBody QueryParam queryParam) {
+    public String query(@RequestBody QueryParam queryParam) {
         // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
@@ -43,7 +44,8 @@ public class CoordinatorController {
         System.out.println("query");
         try {
             QueryResult queryResult = queryEngine.query(queryParam.getSparql());
-            return queryResult;
+            // TODO: parse the result in front-end codes instead
+            return queryResult.toString();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -54,7 +56,8 @@ public class CoordinatorController {
      * this API is used for inserting data
      */
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
-    public void insert(@RequestBody StoreParam storeParam) {
+    @ResponseBody
+    public StoreResult insert(@RequestBody StoreParam storeParam) {
         // have a role validation first
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
@@ -66,6 +69,7 @@ public class CoordinatorController {
         for (String predicate : predicates) {
             splitter.split(hyperGraph, predicate);
         }
+        return new StoreResult();
     }
 
     /**

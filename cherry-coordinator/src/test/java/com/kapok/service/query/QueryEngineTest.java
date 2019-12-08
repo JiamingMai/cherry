@@ -1,5 +1,6 @@
 package com.kapok.service.query;
 
+import com.kapok.model.query.QueryResult;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.service.discovery.NodeManager;
 import com.kapok.service.store.Splitter;
