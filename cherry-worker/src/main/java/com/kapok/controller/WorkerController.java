@@ -40,4 +40,11 @@ public class WorkerController {
         return hyperGraph.toString();
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/deleteRdfs")
+    @ResponseBody
+    public String deleteRdfs() {
+        storageManager.deleteRdfs();
+        return "success";
+    }
+
 }

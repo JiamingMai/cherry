@@ -16,6 +16,8 @@ public class StorageManager {
 
     private Set<String> savedRdfs = new HashSet<>();
 
+    // TODO: consider to use lock for the methods
+
     public List<RDF> filter(HyperGraph hyperGraph) {
         List<RDF> rdfs = new ArrayList<>();
         // this indicates that there is no WHERE condition
@@ -56,6 +58,17 @@ public class StorageManager {
             hyperGraph.addVertex(new HyperVertex(rdf));
         }
         return hyperGraph;
+    }
+
+    public void deleteRdfs() {
+        try {
+            String rdfFileName = DEFAULT_FILE_NAME;
+            File file = new File(this.getClass().getClassLoader().getResource(rdfFileName).getFile());
+            file.delete();
+            file.createNewFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public HyperGraph readRdfInfo() {

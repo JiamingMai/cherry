@@ -25,7 +25,44 @@ public class HttpCommandUtil {
 
     private static final String LOAD_URL = "/worker/loadRdfs";
 
+    private static final String DELETE_URL = "/worker/deleteRdfs";
+
     private static final String REGISTER_WORKER_URL = "/coordinator/registerWorker";
+
+    public static void sendDeleteRdfsCommand(Node node) {
+        String url = "http://" + node.getHost() + ":" + node.getPort() + DELETE_URL;
+        JSONObject jsonObject = null;
+        CloseableHttpClient client = null;
+        CloseableHttpResponse response = null;
+        try {
+            client = HttpClients.createDefault();
+            HttpPost post = new HttpPost(url);
+            post.setHeader(new BasicHeader("Content-Type", "application/json;charset=utf-8"));
+            response = client.execute(post);
+            int statusCode = response.getStatusLine().getStatusCode();
+            if (SUCCESS_CODE == statusCode) {
+                String result = EntityUtils.toString(response.getEntity(), "UTF-8");
+                try {
+                    jsonObject = JSONObject.parseObject(result);
+                    System.out.println(jsonObject);
+                    return;
+                } catch (Exception e) {
+                    return;
+                }
+            } else {
+                System.out.println(String.format("HttpClientService-line: %d, errorMsg：%s", 146, "POST请求失败！"));
+            }
+        } catch (Exception e) {
+            System.out.println(String.format("HttpClientService-line: %d, Exception：%s", 149, e));
+        } finally {
+            try {
+                response.close();
+                client.close();
+            } catch (IOException e) {
+                // ignore this exception
+            }
+        }
+    }
 
     public static void sendSaveRdfsCommand(Node node, RDF rdf) {
         String url = "http://" + node.getHost() + ":" + node.getPort() + SAVE_URL;

@@ -6,6 +6,7 @@ import com.kapok.model.store.HyperGraph;
 import com.kapok.model.discovery.ServerConfig;
 import com.kapok.model.store.StoreParam;
 import com.kapok.model.store.StoreResult;
+import com.kapok.service.discovery.NodeManager;
 import com.kapok.service.query.QueryEngine;
 import com.kapok.model.query.QueryResult;
 import com.kapok.service.store.Splitter;
@@ -100,6 +101,13 @@ public class CoordinatorController {
         for (Node node : nodes) {
             splitter.getNodeManager().addNode(node);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/clearAllData")
+    @ResponseBody
+    public String clearAllData() {
+        splitter.clearAllData();
+        return "success";
     }
 
 }

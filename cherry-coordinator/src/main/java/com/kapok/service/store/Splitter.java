@@ -4,6 +4,7 @@ import com.kapok.model.discovery.Node;
 import com.kapok.model.store.HyperEdge;
 import com.kapok.model.store.HyperGraph;
 import com.kapok.model.store.HyperVertex;
+import com.kapok.service.discovery.HttpCommandUtil;
 import com.kapok.service.discovery.NodeManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -185,5 +186,11 @@ public class Splitter {
 
     public NodeManager getNodeManager() {
         return nodeManager;
+    }
+
+    public void clearAllData() {
+        for (Node node : nodeManager.getNodeTable().keySet()) {
+            HttpCommandUtil.sendDeleteRdfsCommand(node);
+        }
     }
 }
