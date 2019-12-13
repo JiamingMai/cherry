@@ -5,33 +5,55 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerConfig {
 
-    private String role;
+    private static String role;
 
-    private String address;
+    private static String address;
 
-    private String coordinatorAddress;
+    private static String coordinatorAddress;
 
-    public String getRole() {
+    public static Node getLocalNode() {
+        if (null != address && !address.isEmpty()) {
+            String[] hostAndPort = address.split(":");
+            String host = hostAndPort[0];
+            int port = Integer.valueOf(hostAndPort[1]);
+            Node node = new Node(1, host, port);
+            return node;
+        }
+        return null;
+    }
+
+    public static Node getCoordinatorNode() {
+        if (null != coordinatorAddress && !coordinatorAddress.isEmpty()) {
+            String[] coordinatorHostAndPort = coordinatorAddress.split(":");
+            String coordinatorHost = coordinatorHostAndPort[0];
+            int coordinatorPort = Integer.valueOf(coordinatorHostAndPort[1]);
+            Node coordinatorNode = new Node(1, coordinatorHost, coordinatorPort);
+            return coordinatorNode;
+        }
+        return null;
+    }
+
+    public static String getRole() {
         return role;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public static void setRole(String role) {
+        ServerConfig.role = role;
     }
 
-    public String getAddress() {
+    public static String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public static void setAddress(String address) {
+        ServerConfig.address = address;
     }
 
-    public String getCoordinatorAddress() {
+    public static String getCoordinatorAddress() {
         return coordinatorAddress;
     }
 
-    public void setCoordinatorAddress(String coordinatorAddress) {
-        this.coordinatorAddress = coordinatorAddress;
+    public static void setCoordinatorAddress(String coordinatorAddress) {
+        ServerConfig.coordinatorAddress = coordinatorAddress;
     }
 }

@@ -19,9 +19,6 @@ public class ServerInitializer implements InitializingBean {
      */
     private boolean loaded = false;
 
-    @Autowired
-    protected ServerConfig serverConfig;
-
     public void loadConfig() {
         // set configuration for this server
         if (!loaded) {
@@ -29,9 +26,9 @@ public class ServerInitializer implements InitializingBean {
             try {
                 Properties props = new Properties();
                 props.load(new InputStreamReader(new FileInputStream(configFile), "UTF-8"));
-                serverConfig.setRole(props.getProperty("role"));
-                serverConfig.setAddress(props.getProperty("address"));
-                serverConfig.setCoordinatorAddress(props.getProperty("coordinator.address"));
+                ServerConfig.setRole(props.getProperty("role"));
+                ServerConfig.setAddress(props.getProperty("address"));
+                ServerConfig.setCoordinatorAddress(props.getProperty("coordinator.address"));
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
