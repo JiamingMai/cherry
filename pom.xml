@@ -110,6 +110,7 @@
                 <includes>
                     <include>**/*.rdf</include>
                     <include>**/*.properties</include>
+                    <include>**/*.owl</include>
                     <include>**/*.css</include>
                     <include>**/*.html</include>
                 </includes>

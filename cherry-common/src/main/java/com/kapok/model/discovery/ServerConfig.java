@@ -2,6 +2,8 @@ package com.kapok.model.discovery;
 
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Component
 public class ServerConfig {
 
@@ -10,6 +12,8 @@ public class ServerConfig {
     private static String address;
 
     private static String coordinatorAddress;
+
+    private static AtomicInteger idCounter = new AtomicInteger(1);
 
     public static Node getLocalNode() {
         if (null != address && !address.isEmpty()) {
@@ -55,5 +59,9 @@ public class ServerConfig {
 
     public static void setCoordinatorAddress(String coordinatorAddress) {
         ServerConfig.coordinatorAddress = coordinatorAddress;
+    }
+
+    public static AtomicInteger getIdCounter() {
+        return idCounter;
     }
 }

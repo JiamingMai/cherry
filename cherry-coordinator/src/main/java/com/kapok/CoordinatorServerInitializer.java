@@ -23,26 +23,17 @@ public class CoordinatorServerInitializer extends ServerInitializer implements I
     public void afterPropertiesSet() throws Exception {
         loadConfig();
         // register itself to the coordinator
-        if (serverConfig.getRole().equalsIgnoreCase(RoleType.COORDINATOR.name())) {
+        if (ServerConfig.getRole().equalsIgnoreCase(RoleType.COORDINATOR.name())) {
             // initialize coordinator
-            String[] hostAndPort = serverConfig.getAddress().split(":");
-            String host = hostAndPort[0];
-            int port = Integer.valueOf(hostAndPort[1]);
-            Node coordinatorNode = new Node(1, host, port);
+            Node coordinatorNode = ServerConfig.getCoordinatorNode();
             splitter.getNodeManager().setCoortinatorNode(coordinatorNode);
         }
 
         // register worker node to the coordinator
-        if (serverConfig.getRole().equalsIgnoreCase(RoleType.WORKER.name())) {
-            String[] hostAndPort = serverConfig.getAddress().split(":");
-            String host = hostAndPort[0];
-            int port = Integer.valueOf(hostAndPort[1]);
-            Node workerNode = new Node(1, host, port);
+        if (ServerConfig.getRole().equalsIgnoreCase(RoleType.WORKER.name())) {
+            Node workerNode = ServerConfig.getLocalNode();
             // send a register command to coordinator
-            String[] coordinatorHostAndPort = serverConfig.getCoordinatorAddress().split(":");
-            String coordinatorHost = coordinatorHostAndPort[0];
-            int coordinatorPort = Integer.valueOf(coordinatorHostAndPort[1]);
-            Node coordinatorNode = new Node(1, coordinatorHost, coordinatorPort);
+            Node coordinatorNode = ServerConfig.getCoordinatorNode();
             HttpCommandUtil.sendRegisterWorkerCommand(coordinatorNode, workerNode);
         }
     }
