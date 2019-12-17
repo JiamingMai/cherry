@@ -88,6 +88,7 @@ public class CoordinatorController {
         if (!serverConfig.getRole().equals("coordinator")) {
             System.out.println("Unsupported operation.");
         }
+        long startTimestamp = System.currentTimeMillis();
         String tmpFilePath = null;
         try {
             if (!file.isEmpty()) {
@@ -116,6 +117,8 @@ public class CoordinatorController {
 
         File tmpFileToBeDeleted = new File(tmpFilePath);
         tmpFileToBeDeleted.delete();
+        long endTimestamp = System.currentTimeMillis();
+        System.out.println("Total time: " + (endTimestamp - startTimestamp) + " ms");
         return new StoreResult();
     }
 
