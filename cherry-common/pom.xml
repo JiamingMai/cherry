@@ -10,5 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cherry-common</artifactId>
-    
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.jena</groupId>
+            <artifactId>jena</artifactId>
+            <version>3.13.1</version>
+        </dependency>
+    </dependencies>
+
 </project>
