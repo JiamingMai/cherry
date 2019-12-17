@@ -8,8 +8,8 @@ public class HyperGraphConvertorTest {
     @Test
     public void testConvert() {
         String inputFileName = "University0_0.owl";
-        XmlParser xmlParser = new XmlParser();
-        Model model = xmlParser.parse(inputFileName);
+        RdfXmlParser rdfXmlParser = new RdfXmlParser();
+        Model model = rdfXmlParser.parse(inputFileName);
         HyperGraphConvertor hyperGraphConvertor = new HyperGraphConvertor();
         hyperGraphConvertor.convert(model);
     }

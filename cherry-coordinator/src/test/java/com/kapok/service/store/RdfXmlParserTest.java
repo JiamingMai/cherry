@@ -2,13 +2,13 @@ package com.kapok.service.store;
 
 import org.junit.jupiter.api.Test;
 
-public class XmlParserTest {
+public class RdfXmlParserTest {
 
     @Test
     public void testParse() {
         String inputFileName = "University0_0.owl";
-        XmlParser xmlParser = new XmlParser();
-        xmlParser.parse(inputFileName);
+        RdfXmlParser rdfXmlParser = new RdfXmlParser();
+        rdfXmlParser.parse(inputFileName);
     }
 
 }

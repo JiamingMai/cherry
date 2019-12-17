@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 @Service
-public class XmlParser {
+public class RdfXmlParser {
 
     public Model parse(String inputFileName) {
         // create an empty model
